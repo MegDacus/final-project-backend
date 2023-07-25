@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     skip_before_action :authorize_user, only: [:create]
+    skip_before_action :verify_authenticity_token
 
     def create
         puts "test"
@@ -9,7 +10,7 @@ class SessionsController < ApplicationController
             session[:user_id] = user.id
             render json: user, status: :created
         else  
-            render json: {error: "Invalid username or password"}, status: :unauthorized
+            render json: {errors: ["Invalid username or password"]}, status: :unauthorized
         end
     end
 

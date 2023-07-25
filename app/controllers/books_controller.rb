@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+    skip_before_action :verify_authenticity_token
+    skip_before_action :authorize_user
 
     def index
         books = Book.all
@@ -33,7 +34,7 @@ class BooksController < ApplicationController
    private
 
    def book_params 
-    params.permit(:genre_id, :title, :author)
+    params.permit(:genre_id, :title, :author, :image_url)
    end
 
    def is_admin?

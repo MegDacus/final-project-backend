@@ -9,9 +9,7 @@ class BookclubsController < ApplicationController
 
     def create
         club = Bookclub.create!(bookclub_params)
-        # TEMPORARILY REMOVE MEMBERSHIP AND HOST ID IN ORDER TO CREATE BOOKCLUB
-        # club = Bookclub.create!(bookclub_params.merge(host_user_id: @current_user.id))
-        # Membership.create!(user_id: @current_user.id, bookclub_id: club.id, is_host: true)
+        Membership.create!(user_id: params[:host_user_id], bookclub_id: club.id, is_host: true)
         render json: club, status: :created
     end
 

@@ -1,4 +1,5 @@
 class GenresController < ApplicationController
+    skip_before_action :authorize_user
 
     def index
         genres = Genre.all 

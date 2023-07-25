@@ -1,5 +1,5 @@
 class BookSerializer < ActiveModel::Serializer
-  attributes :id, :title, :author
+  attributes :id, :title, :author, :image_url
 
   has_many :bookclubs, serializer: BookShowSerializer, if: -> { should_include?(:bookclubs) } 
 

@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
     validates :username, :first_name, :last_name, :password, :password_confirmation,  presence: true
     validates :username, uniqueness: {message: ": This username is already taken."}
+
 end
