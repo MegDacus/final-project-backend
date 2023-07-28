@@ -1,5 +1,5 @@
 class BookclubSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :this_months_book, :previous_books
+  attributes :id, :name, :description, :this_months_book, :previous_books, :host
 
   def this_months_book
     bookclub_book = BookclubBook.where(month: current_month, bookclub_id: object.id).first
@@ -21,6 +21,11 @@ class BookclubSerializer < ActiveModel::Serializer
       end 
   end
 
+  def host
+    host = User.find_by(id: object.host_user_id)
+    host.username
+  end
+
   private 
 
   def current_month 
@@ -30,7 +35,9 @@ class BookclubSerializer < ActiveModel::Serializer
   def serialize_book(book)
     { "id": book.id,
       "title": book.title,
-      "author": book.author}
+      "author": book.author,
+      "image_url": book.image_url,
+      "summary": book.summary}
   end
 
 end
