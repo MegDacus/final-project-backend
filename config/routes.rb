@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   get '/me', to: 'users#show'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  post '/save_image', to: 'users#save_image'
+  get '/get_image', to: 'users#get_image';
 
 end

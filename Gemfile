@@ -22,6 +22,7 @@ gem "bcrypt"
 gem 'active_model_serializers'
 gem 'byebug'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
+gem 'base64'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

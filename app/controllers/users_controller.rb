@@ -21,6 +21,33 @@ class UsersController < ApplicationController
         render json: @current_user, status: :ok
     end
 
+    def save_image
+        base64_string = params[:base64_string]
+        cleaned_base64_string = base64_string.sub(/\Adata:([-\w]+\/[-\w]+);base64,/, '')
+        decoded_image = Base64.decode64(cleaned_base64_string)
+
+        file_path = Rails.root.join('app', 'assets', 'images', 'profile'+@current_user.id.to_s()+'.png' )
+        @current_user.profile_pic = file_path;
+
+        File.open(file_path, 'wb') do |file|
+            file.write(decoded_image)
+        end
+
+        render json: {message: "Image saved successfully."}
+    end
+
+    def get_image
+
+        file_path = Rails.root.join('app', 'assets', 'images', 'profile'+@current_user.id.to_s()+'.png' )
+
+        image_data = File.read(file_path)
+
+        base64_data = Base64.encode64(image_data)
+
+    # Send the base64 image data as a response
+        render json: { image_data: base64_data }
+    end
+
     private
 
     def user_params

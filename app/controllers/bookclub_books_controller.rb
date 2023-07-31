@@ -2,6 +2,7 @@ class BookclubBooksController < ApplicationController
     skip_before_action :verify_authenticity_token, only: :create
 
     def create
+        puts @current_user
         if is_host?
              book = BookclubBook.create!(club_book_params.merge(bookclub_id: params[:bookclub_id]))
             render json: book, status: :created
