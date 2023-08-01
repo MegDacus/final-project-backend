@@ -1,9 +1,19 @@
 class BookclubsController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+    skip_before_action :verify_authenticity_token
     skip_before_action :authorize_user
 
     def index
-        clubs = Bookclub.all
+        search_query = params[:search_query]
+        type = params[:type]
+
+        if search_query.present? && type == 'club'
+            clubs = Bookclub.where("name LIKE ? COLLATE NOCASE", "%#{search_query}%")
+        elsif search_query.present? && type == 'genre'
+            clubs = Bookclub.joins(:books).where("books.genres LIKE ? COLLATE NOCASE", "%#{search_query}%").distinct
+        else
+            clubs = Bookclub.all
+        end
+
         render json: clubs, each_serializer: BookclubIndexSerializer
     end
 
@@ -16,6 +26,14 @@ class BookclubsController < ApplicationController
     def show
         club = Bookclub.find_by!(id: params[:id])
         render json: club, include: ['this_months_book','discussion_questions','previous_books']
+    end
+
+    def update
+        puts 'TEST TESt TEST'
+        club = Bookclub.find_by!(id: params[:id])
+        
+        club.update(bookclub_params)
+        render json: { message: "Bookclub updated successfully" }
     end
 
     def destroy 
@@ -34,7 +52,7 @@ class BookclubsController < ApplicationController
     private
 
     def bookclub_params
-        params.permit(:name, :description, :host_user_id)
+        params.permit(:name, :description, :host_user_id, :image_url)
     end
  
 end

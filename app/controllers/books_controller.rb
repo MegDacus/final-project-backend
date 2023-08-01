@@ -2,7 +2,18 @@ class BooksController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        books = Book.all
+        search_query = params[:search_query]
+        type = params[:type]
+
+        if search_query.present? && type.present?
+            if type == "book"
+                books = Book.where("title LIKE ? COLLATE NOCASE", "%#{search_query}%")
+            elsif type == "author"
+                books = Book.where("author LIKE ? COLLATE NOCASE", "%#{search_query}%")
+            end
+        else 
+            books = Book.all
+        end
         render json: books, exclude: ['bookclubs', 'discussion_questions']
     end
 
@@ -33,7 +44,7 @@ class BooksController < ApplicationController
    private
 
    def book_params 
-    params.permit(:genre_id, :title, :author, :image_url)
+    params.permit(:genres, :title, :author, :image_url, :summary)
    end
 
    def is_admin?

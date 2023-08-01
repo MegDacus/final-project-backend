@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_043843) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_125027) do
   create_table "bookclub_books", force: :cascade do |t|
     t.integer "bookclub_id"
     t.integer "book_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_043843) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "host_user_id"
+    t.string "image_url"
   end
 
   create_table "books", force: :cascade do |t|

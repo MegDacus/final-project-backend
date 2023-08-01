@@ -1,5 +1,5 @@
 class BookclubSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :this_months_book, :previous_books, :host
+  attributes :id, :name, :description, :this_months_book, :previous_books, :host, :image_url
 
   def this_months_book
     bookclub_book = BookclubBook.where(month: current_month, bookclub_id: object.id).first
@@ -41,7 +41,9 @@ class BookclubSerializer < ActiveModel::Serializer
       "title": book.title,
       "author": book.author,
       "image_url": book.image_url,
-      "summary": book.summary}
+      "summary": book.summary,
+      "genres": book.genres
+     }
   end
 
 end

@@ -23,6 +23,8 @@ class BookclubBooksController < ApplicationController
     end
 
     def is_host?
+        puts "TEST TEST TEST"
+        puts @current_user.username
         Membership.exists?(bookclub_id: params[:bookclub_id], user_id: @current_user.id, is_host: true)
     end
 end
