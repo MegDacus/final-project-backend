@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
     skip_before_action :verify_authenticity_token
-    skip_before_action :authorize_user
 
     def index
         books = Book.all
@@ -38,7 +37,7 @@ class BooksController < ApplicationController
    end
 
    def is_admin?
-    @current_user[:is_admin] == true
+    @current_user[:is_admin]
    end
 
    def render_error 

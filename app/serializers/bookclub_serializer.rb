@@ -23,7 +23,11 @@ class BookclubSerializer < ActiveModel::Serializer
 
   def host
     host = User.find_by(id: object.host_user_id)
-    host.username
+    host_info = {
+      "id": host.id,
+      "username": host.username
+    }
+    host_info
   end
 
   private 
