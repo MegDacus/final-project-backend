@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         decoded_image = Base64.decode64(cleaned_base64_string)
 
         file_path = Rails.root.join('app', 'assets', 'images', 'profile'+@current_user.id.to_s()+'.png' )
-        @current_user.profile_pic = file_path;
+        @current_user.profile_pic = file_path.to_s;
 
         File.open(file_path, 'wb') do |file|
             file.write(decoded_image)

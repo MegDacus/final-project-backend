@@ -25,7 +25,7 @@ class BookclubsController < ApplicationController
 
     def show
         club = Bookclub.find_by!(id: params[:id])
-        render json: club, include: ['this_months_book','discussion_questions','previous_books']
+        render json: club, include: ['this_months_book','discussion_questions','previous_books', 'discussion_questions.comments']
     end
 
     def update

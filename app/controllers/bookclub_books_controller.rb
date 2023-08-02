@@ -19,7 +19,7 @@ class BookclubBooksController < ApplicationController
     private
 
     def club_book_params
-        params.permit(:book_id, :month)
+        params.permit(:book_id, :month, :year)
     end
 
     def is_host?

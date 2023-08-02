@@ -12,7 +12,7 @@ class BookclubIndexSerializer < ActiveModel::Serializer
   private 
 
   def current_month 
-    Time.now.strftime('%B')
+    Time.now.month
   end
 
   def serialize_book(book)

@@ -14,11 +14,15 @@ class BookclubSerializer < ActiveModel::Serializer
   end
   
   def previous_books
-      books_array = object.bookclub_books.where.not(month: current_month)
-      books_array.map do |bookclub_book| 
-        book = Book.find_by(id: bookclub_book.book_id)
-        serialize_book(book)
-      end 
+    current_month = Date.today.month
+    current_year = Date.today.year
+  
+    books_array = object.bookclub_books.where('year < ? OR (year = ? AND month < ?)', current_year, current_year, current_month)
+  
+    books_array.map do |bookclub_book|
+      book = Book.find_by(id: bookclub_book.book_id)
+      serialize_book(book)
+    end
   end
 
   def host
@@ -33,7 +37,7 @@ class BookclubSerializer < ActiveModel::Serializer
   private 
 
   def current_month 
-    Time.now.strftime('%B')
+    Time.now.month
   end
 
   def serialize_book(book)
