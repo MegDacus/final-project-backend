@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
     skip_before_action :verify_authenticity_token
+    skip_before_action :authorize_user, only: [:index]
 
     def index
         search_query = params[:search_query]
