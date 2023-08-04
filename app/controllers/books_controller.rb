@@ -20,7 +20,7 @@ class BooksController < ApplicationController
 
    def show
         book = Book.find_by(id: params[:id])
-        render json: book
+        render json: book, include: ['this_months_clubs']
    end
 
    def create
