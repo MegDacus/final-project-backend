@@ -3,11 +3,13 @@ class BookSerializer < ActiveModel::Serializer
   
   
   def this_months_clubs  
-    object.bookclubs.filter do |club|
+    clubs_array = object.bookclubs.filter do |club|
       bookclub_book = BookclubBook.where(month: Time.now.month, bookclub_id: club.id).first
       book = Book.find_by(id: bookclub_book&.book_id)
-      book.id == object.id
+      book&.id == object.id
     end
+
+    clubs_array.uniq
   end
   
   def should_include?(association)

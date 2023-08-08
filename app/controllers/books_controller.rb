@@ -32,9 +32,22 @@ class BooksController < ApplicationController
      end
    end
 
+   def update
+    if is_admin?
+        book = Book.find_by!(id: params[:id])
+        
+        book.update(book_params)
+        render json: { message: "Book updated successfully" }
+    else  
+        render_error
+    end
+   end
+
    def destroy 
     if is_admin?
         book = Book.find_by!(id: params[:id])
+        bookclub_books = BookclubBook.where(book_id: book.id)
+        bookclub_books.destroy_all
         book.delete 
         head :no_content 
     else  

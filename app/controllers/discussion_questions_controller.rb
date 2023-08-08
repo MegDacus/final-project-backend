@@ -24,6 +24,7 @@ class DiscussionQuestionsController < ApplicationController
 
     def destroy
         if is_host?
+            @question.comments.destroy_all
             @question.destroy 
             head :no_content 
         else  
